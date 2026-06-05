@@ -1,0 +1,23 @@
+# dependencies
+node_modules/
+package-lock.json
+
+# Capacitor / Android generated projects (regenerated in CI)
+android/
+ios/
+.capacitor/
+
+# build-time filler assets (regenerated in CI to hit the size target)
+www/assets/bulk/
+
+# build output
+*.apk
+*.aab
+dist/
+.gradle/
+
+# os / editor
+.DS_Store
+*.log
+.idea/
+.vscode/

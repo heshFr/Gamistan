@@ -1,0 +1,19 @@
+{
+  "name": "nine-lives",
+  "version": "1.0.0",
+  "description": "Nine Lives — an endless arcade climber where you race the ghosts of your past nine lives. A Gamistan game.",
+  "private": true,
+  "scripts": {
+    "bulk": "node scripts/generate-bulk-assets.js",
+    "add:android": "cap add android",
+    "sync": "cap sync android",
+    "serve": "node scripts/dev-server.js"
+  },
+  "dependencies": {
+    "@capacitor/android": "^6.1.2",
+    "@capacitor/core": "^6.1.2"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^6.1.2"
+  }
+}

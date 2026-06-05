@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#1a1033" />
+  <title>Nine Lives</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div id="app">
+    <canvas id="game"></canvas>
+
+    <!-- HUD -->
+    <div id="hud" class="hidden">
+      <div class="hud-row">
+        <div class="hud-chip" id="hud-height">0 m</div>
+        <div class="hud-chip" id="hud-fish">🐟 0</div>
+      </div>
+      <div class="hud-lives" id="hud-lives"></div>
+      <div class="hud-combo hidden" id="hud-combo"></div>
+    </div>
+
+    <!-- Touch controls hint -->
+    <div id="touch-hint" class="hidden">tap left / right side to steer</div>
+
+    <!-- Main menu -->
+    <div id="menu" class="screen">
+      <h1 class="logo">NINE<span>LIVES</span></h1>
+      <p class="tagline">race the ghosts of your past nine lives</p>
+      <div class="cat-preview"><canvas id="preview-canvas" width="220" height="220"></canvas></div>
+      <button class="btn btn-primary" id="btn-play">PLAY</button>
+      <div class="menu-buttons">
+        <button class="btn" id="btn-cats">CATS</button>
+        <button class="btn" id="btn-howto">HOW TO</button>
+        <button class="btn" id="btn-sound">🔊</button>
+      </div>
+      <div class="best" id="menu-best">Best: 0 m</div>
+      <div class="coins" id="menu-coins">🐟 0</div>
+    </div>
+
+    <!-- How to play -->
+    <div id="howto" class="screen hidden">
+      <h2>HOW TO PLAY</h2>
+      <ul class="howto-list">
+        <li>🐾 Your cat climbs forever. Steer left/right to dodge.</li>
+        <li>💀 When you die, you respawn — but your last run becomes a <b>ghost cat</b> that replays the same path.</li>
+        <li>👻 Each of your nine lives runs the <b>same seeded course</b>, so ghosts pile up. Don't touch them!</li>
+        <li>🐟 Grab fish for points &amp; combos. Spend them on new cats.</li>
+        <li>🏆 Survive all nine lives and climb as high as you can.</li>
+      </ul>
+      <button class="btn btn-primary" id="btn-howto-back">GOT IT</button>
+    </div>
+
+    <!-- Cat selection -->
+    <div id="cats" class="screen hidden">
+      <h2>YOUR CATS</h2>
+      <div class="cat-grid" id="cat-grid"></div>
+      <button class="btn btn-primary" id="btn-cats-back">BACK</button>
+    </div>
+
+    <!-- Life lost flash -->
+    <div id="life-banner" class="banner hidden"></div>
+
+    <!-- Game over -->
+    <div id="gameover" class="screen hidden">
+      <h2 id="go-title">GAME OVER</h2>
+      <div class="go-stats">
+        <div class="go-stat"><span id="go-height">0</span><label>METRES</label></div>
+        <div class="go-stat"><span id="go-fish">0</span><label>FISH</label></div>
+        <div class="go-stat"><span id="go-best">0</span><label>BEST</label></div>
+      </div>
+      <div class="go-new hidden" id="go-newbest">★ NEW BEST! ★</div>
+      <button class="btn btn-primary" id="btn-retry">RETRY</button>
+      <button class="btn" id="btn-home">HOME</button>
+    </div>
+
+    <div id="orientation-note" class="hidden">📱 best played upright</div>
+  </div>
+
+  <script src="js/rng.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/sprites.js"></script>
+  <script src="js/world.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

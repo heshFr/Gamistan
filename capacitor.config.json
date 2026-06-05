@@ -1,0 +1,10 @@
+{
+  "appId": "com.gamistan.ninelives",
+  "appName": "Nine Lives",
+  "webDir": "www",
+  "backgroundColor": "#1a1033",
+  "android": {
+    "allowMixedContent": true,
+    "backgroundColor": "#1a1033"
+  }
+}
