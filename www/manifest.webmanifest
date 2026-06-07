@@ -1,0 +1,14 @@
+{
+  "name": "Nine Lives",
+  "short_name": "Nine Lives",
+  "description": "Race the ghosts of your past nine lives — a cute-cat endless climber.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "fullscreen",
+  "orientation": "portrait",
+  "background_color": "#1a1033",
+  "theme_color": "#1a1033",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

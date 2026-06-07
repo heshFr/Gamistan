@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <meta name="theme-color" content="#1a1033" />
+  <link rel="manifest" href="manifest.webmanifest" />
   <title>Nine Lives</title>
   <link rel="stylesheet" href="css/style.css" />
 </head>
@@ -11,80 +12,117 @@
   <div id="app">
     <canvas id="game"></canvas>
 
-    <!-- HUD -->
+    <!-- ============================ HUD ============================ -->
     <div id="hud" class="hidden">
-      <div class="hud-row">
-        <div class="hud-chip" id="hud-height">0 m</div>
-        <div class="hud-chip" id="hud-fish">🐟 0</div>
+      <div class="hud-top">
+        <button class="icon-btn" id="btn-pause" aria-label="pause">⏸</button>
+        <div class="hud-center">
+          <div class="hud-height" id="hud-height">0 m</div>
+          <div class="hud-biome" id="hud-biome"></div>
+        </div>
+        <div class="hud-fish" id="hud-fish">🐟 0</div>
       </div>
       <div class="hud-lives" id="hud-lives"></div>
+      <div class="hud-effects" id="hud-effects"></div>
       <div class="hud-combo hidden" id="hud-combo"></div>
     </div>
 
-    <!-- Touch controls hint -->
-    <div id="touch-hint" class="hidden">tap left / right side to steer</div>
+    <!-- touch steering buttons (control scheme = buttons) -->
+    <div id="touch-buttons" class="hidden">
+      <div class="touch-pad" id="pad-left">◀</div>
+      <div class="touch-pad" id="pad-right">▶</div>
+    </div>
+    <div id="touch-hint" class="hidden">tap &amp; hold the sides, or drag, to steer</div>
 
-    <!-- Main menu -->
+    <!-- banners + toasts -->
+    <div id="banner" class="banner hidden"></div>
+    <div id="toasts"></div>
+
+    <!-- ============================ MENU ============================ -->
     <div id="menu" class="screen">
-      <h1 class="logo">NINE<span>LIVES</span></h1>
-      <p class="tagline">race the ghosts of your past nine lives</p>
-      <div class="cat-preview"><canvas id="preview-canvas" width="220" height="220"></canvas></div>
-      <button class="btn btn-primary" id="btn-play">PLAY</button>
-      <div class="menu-buttons">
-        <button class="btn" id="btn-cats">CATS</button>
-        <button class="btn" id="btn-howto">HOW TO</button>
-        <button class="btn" id="btn-sound">🔊</button>
+      <div class="menu-top">
+        <div class="pill" id="menu-fish">🐟 0</div>
+        <div class="pill" id="menu-best">Best 0 m</div>
       </div>
-      <div class="best" id="menu-best">Best: 0 m</div>
-      <div class="coins" id="menu-coins">🐟 0</div>
+      <h1 class="logo">NINE<span>LIVES</span></h1>
+      <div class="cat-preview"><canvas id="preview-canvas" width="260" height="260"></canvas></div>
+      <button class="btn btn-primary" id="btn-play">PLAY</button>
+      <button class="btn btn-daily" id="btn-daily">🗓 DAILY CHALLENGE</button>
+      <nav class="menu-nav">
+        <button class="nav-btn" data-panel="shop"><span>🛍️</span>Shop</button>
+        <button class="nav-btn" data-panel="missions"><span>🎯</span>Missions</button>
+        <button class="nav-btn" data-panel="upgrades"><span>⚙️</span>Upgrades</button>
+        <button class="nav-btn" data-panel="achievements"><span>🏆</span>Awards</button>
+        <button class="nav-btn" data-panel="stats"><span>📊</span>Stats</button>
+        <button class="nav-btn" data-panel="settings"><span>🔧</span>Settings</button>
+      </nav>
+      <button class="link-btn" id="btn-howto">how to play</button>
     </div>
 
-    <!-- How to play -->
+    <!-- ===================== GENERIC PANEL ===================== -->
+    <div id="panel" class="screen hidden">
+      <div class="panel-head">
+        <button class="icon-btn" id="panel-back">‹</button>
+        <h2 id="panel-title">Panel</h2>
+        <div class="pill" id="panel-fish">🐟 0</div>
+      </div>
+      <div id="panel-tabs" class="panel-tabs hidden"></div>
+      <div id="panel-body" class="panel-body"></div>
+    </div>
+
+    <!-- ===================== HOW TO ===================== -->
     <div id="howto" class="screen hidden">
       <h2>HOW TO PLAY</h2>
       <ul class="howto-list">
-        <li>🐾 Your cat climbs forever. Steer left/right to dodge.</li>
-        <li>💀 When you die, you respawn — but your last run becomes a <b>ghost cat</b> that replays the same path.</li>
-        <li>👻 Each of your nine lives runs the <b>same seeded course</b>, so ghosts pile up. Don't touch them!</li>
-        <li>🐟 Grab fish for points &amp; combos. Spend them on new cats.</li>
-        <li>🏆 Survive all nine lives and climb as high as you can.</li>
+        <li>🐾 Your cat climbs forever. <b>Drag</b> or use <b>← →</b> to steer through the gaps.</li>
+        <li>💀 When you die, you respawn — but your last run becomes a numbered <b>ghost cat</b> replaying the same course. Don't touch your past selves!</li>
+        <li>🐟 Grab fish for points &amp; combos. <b>Golden fish</b> are worth 10×.</li>
+        <li>⚡ Snag <b>power-ups</b>: shields, magnets, rockets, catnip frenzy &amp; more.</li>
+        <li>🐉 Climb through 8 biomes and beat the <b>nine-tailed guardians</b> at each peak.</li>
+        <li>🛍️ Spend fish on cats, hats, trails &amp; permanent upgrades.</li>
       </ul>
       <button class="btn btn-primary" id="btn-howto-back">GOT IT</button>
     </div>
 
-    <!-- Cat selection -->
-    <div id="cats" class="screen hidden">
-      <h2>YOUR CATS</h2>
-      <div class="cat-grid" id="cat-grid"></div>
-      <button class="btn btn-primary" id="btn-cats-back">BACK</button>
+    <!-- ===================== PAUSE ===================== -->
+    <div id="pause" class="screen hidden">
+      <h2>PAUSED</h2>
+      <button class="btn btn-primary" id="btn-resume">RESUME</button>
+      <button class="btn" id="btn-pause-restart">RESTART</button>
+      <button class="btn" id="btn-pause-home">QUIT TO MENU</button>
     </div>
 
-    <!-- Life lost flash -->
-    <div id="life-banner" class="banner hidden"></div>
-
-    <!-- Game over -->
+    <!-- ===================== GAME OVER ===================== -->
     <div id="gameover" class="screen hidden">
-      <h2 id="go-title">GAME OVER</h2>
+      <h2 id="go-title">OUT OF LIVES</h2>
+      <div class="go-new hidden" id="go-newbest">★ NEW BEST! ★</div>
       <div class="go-stats">
         <div class="go-stat"><span id="go-height">0</span><label>METRES</label></div>
         <div class="go-stat"><span id="go-fish">0</span><label>FISH</label></div>
         <div class="go-stat"><span id="go-best">0</span><label>BEST</label></div>
       </div>
-      <div class="go-new hidden" id="go-newbest">★ NEW BEST! ★</div>
+      <div class="go-run" id="go-run"></div>
       <button class="btn btn-primary" id="btn-retry">RETRY</button>
-      <button class="btn" id="btn-home">HOME</button>
+      <div class="go-row">
+        <button class="btn" id="btn-go-shop">🛍️ SHOP</button>
+        <button class="btn" id="btn-go-home">HOME</button>
+      </div>
     </div>
-
-    <div id="orientation-note" class="hidden">📱 best played upright</div>
   </div>
 
+  <script src="js/util.js"></script>
+  <script src="js/events.js"></script>
   <script src="js/rng.js"></script>
   <script src="js/storage.js"></script>
+  <script src="js/data.js"></script>
   <script src="js/audio.js"></script>
   <script src="js/sprites.js"></script>
+  <script src="js/particles.js"></script>
   <script src="js/world.js"></script>
   <script src="js/game.js"></script>
-  <script src="js/ui.js"></script>
+  <script src="js/input.js"></script>
+  <script src="js/hud.js"></script>
+  <script src="js/menu.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

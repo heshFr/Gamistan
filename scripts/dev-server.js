@@ -10,6 +10,7 @@ const PORT = process.env.PORT || 5173;
 const TYPES = {
   ".html": "text/html", ".js": "text/javascript", ".css": "text/css",
   ".json": "application/json", ".png": "image/png", ".svg": "image/svg+xml",
+  ".webmanifest": "application/manifest+json", ".woff2": "font/woff2",
 };
 
 http.createServer((req, res) => {
